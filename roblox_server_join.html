@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roblox Server Join</title>
+<style>
+body{
+  margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;
+  background:#080d18;color:white;font-family:Arial,sans-serif;
+}
+.box{width:330px;padding:28px;border-radius:18px;background:#111a2b;text-align:center}
+input,button{width:100%;box-sizing:border-box;padding:13px;margin-top:12px;border:0;border-radius:10px}
+button{background:#3b82f6;color:white;font-weight:bold;cursor:pointer}
+#status{margin-top:15px;color:#aaa}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Roblox Server</h2>
+  <p>ライセンスキーを入力</p>
+  <input id="license" type="text" placeholder="License Key">
+  <button onclick="join()">認証してRobloxを開く</button>
+  <div id="status"></div>
+</div>
+<script>
+const params = new URLSearchParams(location.search);
+const jobId = params.get("jobid");
+const placeId = "109983668079237";
+
+function join(){
+  const license = document.getElementById("license").value.trim();
+  const status = document.getElementById("status");
+
+  if(!license){
+    status.textContent = "ライセンスキーを入力してください";
+    return;
+  }
+  if(!jobId){
+    status.textContent = "Job IDが指定されていません";
+    return;
+  }
+
+  const robloxUrl =
+    "roblox://placeId=" + encodeURIComponent(placeId) +
+    "&gameInstanceId=" + encodeURIComponent(jobId);
+
+  status.textContent = "Robloxを起動しています…";
+  window.location.href = robloxUrl;
+}
+</script>
+</body>
+</html>
